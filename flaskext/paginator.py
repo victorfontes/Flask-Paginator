@@ -1,9 +1,12 @@
-from __future__ import absolute_import
+# -*- coding: utf-8 -*-
 
-from flask import _request_ctx_stack, request
+from __future__ import absolute_import
+from flask import request
+
 from math import ceil
 
 class Pagination(object):
+    " Handles Pagination "
     def __init__(self, page, per_page, total_count):
         self.page = page
         self.per_page = per_page
@@ -36,44 +39,43 @@ class Pagination(object):
 class Paginator(object):
     def __init__(self, app):
         self.app = app
-
         self.app.config.setdefault('PAGINATION_ITEMS_PER_PAGE', 10)
         self.app.config.setdefault('PAGINATION_PARAM', 'page')        
         self.managers = {}
-        #self.app.teardown_request(self.teardown_request)
-        #self.app.before_request(self.before_request)
 
     def _per_page(self, per_page):
+        " number of item to display in each page "
         return per_page or self.app.config['PAGINATION_ITEMS_PER_PAGE']
 
     def _register_dic(self, f_total, per_page):
-        return {
-            'f_total': f_total,
-            'per_page': self._per_page(per_page)
-        }
+        " dic with attributes of an object that's registred for pagination "
+        return { 'f_total': f_total,
+            'per_page': self._per_page(per_page) }
 
     def register(self, label, f_total, per_page=None):
-        if self.managers.has_key(label):
-            raise Exception('Label already registered')
-
-        pages_dic = self._register_dic(f_total, per_page)
-        self.managers[label] = pages_dic
-        manager_attr = 'for_' + label.lower()
+        " Register an object for pagination, allowing to use it in any view "
+        if not self.managers.has_key(label):
+            self.managers[label] = self._register_dic(f_total, per_page)
+            manager_attr = 'for_' + label.lower()
 
     def _manager(self, label):
+        " attrs of a registred type "
         for k,v in self.managers.items():
             if k.lower() == label.lower():
                 return v
         return None
 
     def get_manager(self, label):
+        " pagination manager object to use in a view "
         manager = self._manager(label)
         return Pagination(self._current_page(), manager['per_page'], manager['f_total']())
 
     def _current_page(self):
+        " gets current page from request "
         return int(request.args.get(self.app.config['PAGINATION_PARAM'], '1'))
 
     def __getattribute__(self, attr):
+        " allow to access any registred type with 'pagination.for_type' "
         if attr.startswith('for_'):
             label = attr.replace('for_', '')         
             return self.get_manager(label)
