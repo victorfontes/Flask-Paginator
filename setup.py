@@ -11,8 +11,8 @@ setup(
     name='Flask-Paginator',
     version='0.1',
 
-    packages=['flaskext', 'flaskext.paginator'],
-    namespace_packages=['flaskext'],
+    packages=['flaskext',],
+    namespace_packages=['flaskext',],
 
     url='http://github.com/victorfontes/flask-paginator',
     description='Simple pagination for Flask',
