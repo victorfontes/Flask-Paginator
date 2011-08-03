@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Flask-Paginator
 ----------------
@@ -12,7 +11,7 @@ setup(
     name='Flask-Paginator',
     version='0.1',
 
-    packages=find_packages(),
+    packages=['flaskext'],
     namespace_packages=['flaskext'],
 
     url='http://github.com/victorfontes/flask-paginator',
@@ -26,10 +25,6 @@ setup(
     #packages=['flaskext'],
     zip_safe=False, platforms='any',
 
-    install_requires=[
-        'Flask'
-    ],
-
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
@@ -40,3 +35,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ]
 )
+
+
+
+
