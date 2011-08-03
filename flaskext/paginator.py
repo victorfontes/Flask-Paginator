@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-
-from __future__ import absolute_import
 from flask import request
-
 from math import ceil
 
 class Pagination(object):

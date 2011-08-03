@@ -6,24 +6,30 @@ Flask-Paginator
 Simple pagination for flask apps
 """
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='Flask-Paginator',
     version='0.1',
+
+    packages=find_packages(),
+    namespace_packages=['flaskext'],
+
     url='http://github.com/victorfontes/flask-paginator',
-    license='BSD',
-    author='Victor Fontes',
-    author_email='contato@victorfontes.com',
     description='Simple pagination for Flask',
     long_description=__doc__,
-    packages=['flaskext'],
-    namespace_packages=['flaskext'],
-    zip_safe=False,
-    platforms='any',
+
+    author='Victor Fontes',
+    author_email='contato@victorfontes.com',
+    license='BSD',
+    
+    #packages=['flaskext'],
+    zip_safe=False, platforms='any',
+
     install_requires=[
         'Flask'
     ],
+
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
@@ -31,6 +37,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-        'Topic :: Software Development :: Libraries :: Python Modules'
+        'Topic :: Software Development :: Libraries :: Python Modules',
     ]
 )
